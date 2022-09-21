@@ -8,6 +8,11 @@ function PlanetsProvider(props) {
   const [filterByName, setFilterByName] = useState({
     name: '',
   });
+  const [filterByNumericValues, setfilterByNumericValues] = useState([{
+    column: '',
+    comparison: '',
+    value: '',
+  }]);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -22,7 +27,14 @@ function PlanetsProvider(props) {
   }, []);
 
   const { children } = props;
-  const contextValue = { planets, setPlanets, filterByName, setFilterByName };
+  const contextValue = {
+    planets,
+    setPlanets,
+    filterByName,
+    setFilterByName,
+    filterByNumericValues,
+    setfilterByNumericValues,
+  };
 
   return (
     <PlanetsContext.Provider value={ contextValue }>
