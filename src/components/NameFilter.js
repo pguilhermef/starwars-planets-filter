@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../contexts/PlanetsContext';
 
-function SearchFilter() {
+function NameFilter() {
   const { filter, setFilterByName } = useContext(PlanetsContext);
 
-  const filterPlanets = (value) => {
+  const filterPlanetsByName = (value) => {
     setFilterByName({ name: value });
   };
 
@@ -16,10 +16,10 @@ function SearchFilter() {
         data-testid="name-filter"
         id="search-filter"
         value={ filter }
-        onChange={ (e) => filterPlanets(e.target.value) }
+        onChange={ (e) => filterPlanetsByName(e.target.value) }
       />
     </label>
   );
 }
 
-export default SearchFilter;
+export default NameFilter;
