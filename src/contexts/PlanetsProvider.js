@@ -8,11 +8,8 @@ function PlanetsProvider(props) {
   const [filterByName, setFilterByName] = useState({
     name: '',
   });
-  const [filterByNumericValues, setfilterByNumericValues] = useState([{
-    column: '',
-    comparison: '',
-    value: '',
-  }]);
+  const [filterByNumericValues, setfilterByNumericValues] = useState([]);
+  const [filterNumericButton, setfilterNumericButton] = useState(false);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -34,6 +31,8 @@ function PlanetsProvider(props) {
     setFilterByName,
     filterByNumericValues,
     setfilterByNumericValues,
+    filterNumericButton,
+    setfilterNumericButton,
   };
 
   return (
