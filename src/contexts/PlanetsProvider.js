@@ -18,6 +18,8 @@ function PlanetsProvider(props) {
     getPlanets();
   }, []);
 
+  const [filter, setfilter] = useState('');
+
   const { children } = props;
   const contextValue = { planets, setPlanets };
 
