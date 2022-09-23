@@ -42,7 +42,7 @@ function Table() {
               <td>{info.terrain}</td>
               <td>{info.surface_water}</td>
               <td>{info.population}</td>
-              <td>{info.films.map((film) => <p key={ film }>{ film }</p>)}</td>
+              <td>{info.films.length}</td>
               <td>{info.created}</td>
               <td>{info.edited}</td>
               <td>{info.url}</td>
