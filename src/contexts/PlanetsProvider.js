@@ -5,6 +5,7 @@ import fetchPlanets from '../services/fetchPlanets';
 
 function PlanetsProvider(props) {
   const [planets, setPlanets] = useState([]);
+  const [planetsToFilter, setPlanetsToFilter] = useState([]);
   const [filterByName, setFilterByName] = useState({
     name: '',
   });
@@ -16,6 +17,7 @@ function PlanetsProvider(props) {
       try {
         const response = await fetchPlanets();
         setPlanets(response);
+        setPlanetsToFilter(response);
       } catch (e) {
         console.log(e.message);
       }
@@ -23,10 +25,15 @@ function PlanetsProvider(props) {
     getPlanets();
   }, []);
 
+  const filteredPlanets = planetsToFilter
+    .filter((planet) => planet.name.toUpperCase()
+      .includes(filterByName.name.toUpperCase()));
+
   const { children } = props;
   const contextValue = {
     planets,
     setPlanets,
+    filteredPlanets,
     filterByName,
     setFilterByName,
     filterByNumericValues,
