@@ -40,6 +40,7 @@ function NumberFilter() {
       <label htmlFor="value-filter">
         <input
           id="value"
+          type="number"
           data-testid="value-filter"
           value={ filterByNumericValues.value }
           onChange={ filterPlanetsByNumericValues }
