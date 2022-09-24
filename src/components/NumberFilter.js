@@ -1,14 +1,37 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PlanetsContext from '../contexts/PlanetsContext';
 
 function NumberFilter() {
-  const { filterByNumericValues, setfilterByNumericValues } = useContext(PlanetsContext);
+  const {
+    filterByNumericValues,
+    setfilterByNumericValues,
+    filterButton,
+    setFilterButton,
+  } = useContext(PlanetsContext);
 
-  const filterPlanetsByNumericValues = ({ target }) => {
-    setfilterByNumericValues((prevState) => ({
+  // Aqui é o estado DESSE arquivo
+  const [numericFilterMetrics, setNumericFiltersMetrics] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
+
+  // Aqui atualiza o estado DESSE arquivo
+  const handleNumericFilterMetrics = ({ target }) => {
+    setNumericFiltersMetrics((prevState) => ({
       ...prevState,
       [target.id]: target.value,
     }));
+  };
+
+  // Aqui pega o estado desse arquivo e o envia para O GLOBAL
+  const applyFilters = () => {
+    const newFilter = numericFilterMetrics;
+    setfilterByNumericValues((prevState) => ([
+      ...prevState,
+      newFilter,
+    ]));
+    setFilterButton(!filterButton);
   };
 
   return (
@@ -17,7 +40,7 @@ function NumberFilter() {
         id="column"
         data-testid="column-filter"
         value={ filterByNumericValues.column }
-        onChange={ filterPlanetsByNumericValues }
+        onChange={ handleNumericFilterMetrics }
       >
         <option>population</option>
         <option>orbital_period</option>
@@ -30,11 +53,11 @@ function NumberFilter() {
         id="comparison"
         data-testid="comparison-filter"
         value={ filterByNumericValues.comparison }
-        onChange={ filterPlanetsByNumericValues }
+        onChange={ handleNumericFilterMetrics }
       >
         <option>maior que</option>
         <option>menor que</option>
-        <option>igual a </option>
+        <option>igual a</option>
       </select>
 
       <label htmlFor="value-filter">
@@ -42,12 +65,19 @@ function NumberFilter() {
           id="value"
           type="number"
           data-testid="value-filter"
-          value={ filterByNumericValues.value }
-          onChange={ filterPlanetsByNumericValues }
+          value={ numericFilterMetrics.value }
+          onChange={ handleNumericFilterMetrics }
         />
       </label>
 
-      <button type="button" data-testid="button-filter">Filtrar</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ applyFilters }
+      >
+        Filtrar
+
+      </button>
     </>
   );
 }
