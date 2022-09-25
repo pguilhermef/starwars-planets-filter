@@ -11,6 +11,13 @@ function PlanetsProvider(props) {
   });
   const [filterByNumericValues, setfilterByNumericValues] = useState([]);
   const [filterButton, setFilterButton] = useState(false);
+  const [columnFilterAvailable, setColumnFilterAvailable] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -25,8 +32,6 @@ function PlanetsProvider(props) {
     getPlanets();
   }, []);
 
-  // Linhas 30 a 54 peguei ajuda no discord.
-
   const handleComparisonFilter = (planet, column, comparison, value) => {
     switch (comparison) {
     case 'maior que':
@@ -39,8 +44,17 @@ function PlanetsProvider(props) {
     }
   };
 
+  const columnsAvailables = () => {
+    const filterInUse = filterByNumericValues
+      .map(({ column }) => column);
+
+    const filtersAvailable = columnFilterAvailable
+      .filter((filter) => !filterInUse.includes(filter));
+
+    setColumnFilterAvailable(filtersAvailable);
+  };
+
   useEffect(() => {
-    console.log(filterByNumericValues.length);
     if (filterByNumericValues.length > 0) {
       filterByNumericValues.forEach((filter) => {
         const { column, comparison, value } = filter;
@@ -51,6 +65,7 @@ function PlanetsProvider(props) {
         setPlanetsToFilter(filteredPlanetList);
       });
     }
+    columnsAvailables();
   }, [filterButton]); // eslint-disable-line
 
   const filteredPlanets = planetsToFilter
@@ -68,6 +83,8 @@ function PlanetsProvider(props) {
     setfilterByNumericValues,
     filterButton,
     setFilterButton,
+    columnFilterAvailable,
+    setColumnFilterAvailable,
   };
 
   return (
