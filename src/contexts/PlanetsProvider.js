@@ -55,6 +55,7 @@ function PlanetsProvider(props) {
   };
 
   useEffect(() => {
+    let filterPlanets = planets;
     if (filterByNumericValues.length > 0) {
       filterByNumericValues.forEach((filter) => {
         const { column, comparison, value } = filter;
@@ -62,9 +63,10 @@ function PlanetsProvider(props) {
           .filter((planet) => (
             handleComparisonFilter(planet, column, comparison, value)
           ));
-        setPlanetsToFilter(filteredPlanetList);
+        filterPlanets = filteredPlanetList;
       });
     }
+    setPlanetsToFilter(filterPlanets);
     columnsAvailables();
   }, [filterButton]); // eslint-disable-line
 
