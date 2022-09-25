@@ -35,6 +35,11 @@ function NumberFilter() {
     setFilterButton(!filterButton);
   };
 
+  const deleteAllFilters = () => {
+    setfilterByNumericValues([]);
+    setFilterButton(!filterButton);
+  };
+
   return (
     <>
       <select
@@ -75,7 +80,14 @@ function NumberFilter() {
         onClick={ applyFilters }
       >
         Filtrar
+      </button>
 
+      <button
+        type="button"
+        onClick={ deleteAllFilters }
+        data-testid="button-remove-filters"
+      >
+        Remover Filtros
       </button>
     </>
   );
