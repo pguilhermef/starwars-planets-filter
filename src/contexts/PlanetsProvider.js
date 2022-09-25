@@ -66,8 +66,8 @@ function PlanetsProvider(props) {
         filterPlanets = filteredPlanetList;
       });
     }
-    setPlanetsToFilter(filterPlanets);
     columnsAvailables();
+    setPlanetsToFilter(filterPlanets);
   }, [filterButton]); // eslint-disable-line
 
   const filteredPlanets = planetsToFilter
