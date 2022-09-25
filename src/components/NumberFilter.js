@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PlanetsContext from '../contexts/PlanetsContext';
 
 function NumberFilter() {
@@ -8,6 +8,7 @@ function NumberFilter() {
     filterButton,
     setFilterButton,
     columnFilterAvailable,
+    setColumnFilterAvailable,
   } = useContext(PlanetsContext);
 
   // Aqui é o estado DESSE arquivo
@@ -25,6 +26,9 @@ function NumberFilter() {
     }));
   };
 
+  const updateColumnOptions = () => setColumnFilterAvailable(columnFilterAvailable
+    .filter((column) => column !== numericFilterMetrics.column));
+
   // Aqui pega o estado desse arquivo e o envia para O GLOBAL
   const applyFilters = () => {
     const newFilter = numericFilterMetrics;
@@ -38,6 +42,30 @@ function NumberFilter() {
   const deleteAllFilters = () => {
     setfilterByNumericValues([]);
     setFilterButton(!filterButton);
+  };
+
+  const deleteFilter = ({ target }) => {
+    const comparison = target.id;
+
+    const filterToDelete = filterByNumericValues
+      .find(({ column }) => column === comparison);
+
+    const deletedFilter = filterByNumericValues
+      .filter((filtro) => filtro !== filterToDelete);
+
+    setfilterByNumericValues(deletedFilter);
+    setFilterButton(!filterButton);
+  };
+
+  useEffect(() => setNumericFiltersMetrics({
+    column: columnFilterAvailable[0],
+    comparison: 'maior que',
+    value: 0,
+  }), [filterButton, columnFilterAvailable]);
+
+  const handleFilter = () => {
+    updateColumnOptions();
+    applyFilters();
   };
 
   return (
@@ -77,7 +105,7 @@ function NumberFilter() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ applyFilters }
+        onClick={ handleFilter }
       >
         Filtrar
       </button>
@@ -89,6 +117,29 @@ function NumberFilter() {
       >
         Remover Filtros
       </button>
+
+      { filterByNumericValues.length > 0 && (
+        <div>
+          Filtros usados:
+          {filterByNumericValues
+            .map(({ column, comparison, value }) => (
+              <p key={ column } data-testid="filter">
+                {column}
+                {' '}
+                {comparison}
+                {' '}
+                {value}
+                <button
+                  id={ column }
+                  type="button"
+                  onClick={ deleteFilter }
+                >
+                  X
+                </button>
+              </p>
+            ))}
+        </div>
+      )}
     </>
   );
 }
