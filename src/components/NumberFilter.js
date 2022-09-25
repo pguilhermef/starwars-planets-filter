@@ -9,6 +9,14 @@ function NumberFilter() {
     setFilterButton,
   } = useContext(PlanetsContext);
 
+  const [columnFilterAvailable, setColumnFilterAvailable] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+
   // Aqui é o estado DESSE arquivo
   const [numericFilterMetrics, setNumericFiltersMetrics] = useState({
     column: 'population',
@@ -32,6 +40,7 @@ function NumberFilter() {
       newFilter,
     ]));
     setFilterButton(!filterButton);
+    verifyColumnsUsed();
   };
 
   return (
@@ -42,11 +51,9 @@ function NumberFilter() {
         value={ filterByNumericValues.column }
         onChange={ handleNumericFilterMetrics }
       >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {columnFilterAvailable.map((column) => (
+          <option key={ column }>{ column }</option>
+        ))}
       </select>
 
       <select
