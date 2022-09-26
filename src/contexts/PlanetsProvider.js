@@ -63,10 +63,11 @@ function PlanetsProvider(props) {
 
   useEffect(() => {
     let filterPlanets = planets;
+    console.log(planetsToFilter);
     if (filterByNumericValues.length > 0) {
       filterByNumericValues.forEach((filter) => {
         const { column, comparison, value } = filter;
-        const filteredPlanetList = planetsToFilter
+        const filteredPlanetList = filterPlanets
           .filter((planet) => (
             handleComparisonFilter(planet, column, comparison, value)
           ));
