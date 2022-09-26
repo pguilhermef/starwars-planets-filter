@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { getAllByTestId, render, screen } from '@testing-library/react';
 import App from '../App';
 import testData from '../../cypress/mocks/testData'
 import userEvent from '@testing-library/user-event';
@@ -63,13 +63,13 @@ describe('Requisito 2 e 3 - Criar filtros', () => {
 
     render(<App />);
 
-    const value = screen.getByTestId(VALUE_FILTER);
-    const button = screen.getByTestId(BUTTON_FILTER);
+    const VALUE_INPUT_FILTER = screen.getByTestId(VALUE_FILTER);
+    userEvent.type('200', VALUE_INPUT_FILTER)
 
-    userEvent.type(value, '7');
-    expect(value).toHaveValue(7);
-
-    userEvent.click(button);
+    const BUTTON_TO_FILTER = getByTestId(BUTTON_FILTER)
+    
+    expect(VALUE_INPUT_FILTER).toHaveValue(200)
+    userEvent.click(BUTTON_TO_FILTER)
   });
 
   test('Testa se é possível selecionar diferentes opções no filtro "Comparison"', () => {
@@ -80,16 +80,87 @@ describe('Requisito 2 e 3 - Criar filtros', () => {
     render(<App />)
 
     const COMPARISON_FILTER_SELECT = screen.getByTestId(COMPARISON_FILTER)
-    const BUTTON_TO_FILTER = screen.getByTestId(BUTTON_FILTER)
     
     userEvent.selectOptions(COMPARISON_FILTER_SELECT, 'maior que')
     expect(COMPARISON_FILTER_SELECT).toHaveValue('maior que')
+    expect(screen.getByText(/maior que/i).selected).toBe(true)
 
     userEvent.selectOptions(COMPARISON_FILTER_SELECT, 'menor que')
     expect(COMPARISON_FILTER_SELECT).toHaveValue('menor que')
+    expect(screen.getByText(/menor que/i).selected).toBe(true)
 
     userEvent.selectOptions(COMPARISON_FILTER_SELECT, 'igual a')
     expect(COMPARISON_FILTER_SELECT).toHaveValue('igual a')
+    expect(screen.getByText(/igual a/i).selected).toBe(true)
   })
 
+  test('Testa se é possível filtrar planetas por letras de seus nomes', async () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => testData,
+    }));
+
+    render(<App />);
+
+    const NAME_INPUT_FILTER = screen.getByTestId(NAME_FILTER);
+    userEvent.type(NAME_INPUT_FILTER, 'tatoo');
+
+    const TATOOINE = await screen.findByText(/Tatooine/i);
+    expect(TATOOINE).toBeInTheDocument();
+  });
+
+  test('Testa se é possível filtrar planetas por letras de seus nomes', async () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => testData,
+    }));
+
+    render(<App />);
+
+    const NAME_INPUT_FILTER = screen.getByTestId(NAME_FILTER);
+    userEvent.type(NAME_INPUT_FILTER, 'tatoo');
+
+    const TATOOINE = await screen.findByText(/Tatooine/i);
+    expect(TATOOINE).toBeInTheDocument();
+  });
+
+  test('Testa se os planetas são filtrados corretamente ao clicar no botão filter', async () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => testData,
+    }));
+
+    render(<App />);
+
+    const COMPARISON_FILTER_SELECT = screen.getByTestId(COMPARISON_FILTER)
+    userEvent.selectOptions(COMPARISON_FILTER_SELECT, 'igual a')
+
+    const VALUE = screen.getByTestId(VALUE_FILTER);
+    userEvent.type(VALUE, '1000000000000');
+
+    const BUTTON = screen.getByTestId(BUTTON_FILTER);
+    userEvent.click(BUTTON);
+
+    const planet = await screen.findByText(/Coruscant/i);
+    expect(planet).not.toBeInTheDocument();
+  });
+
+});
+
+describe('Requisito 7 - Deletar filtros', () => {
+  test('Verifica se o botão remover um filtro funciona', async () => {
+    global.fetch = jest.fn(async () => ({ json: async () => testData }));
+    render(<App />);
+
+    const comparison = screen.getByTestId("comparison-filter");
+    userEvent.selectOptions(comparison, "menor que");
+
+    const buttonFilter = screen.getByTestId(BUTTON_FILTER);
+    userEvent.click(buttonFilter);
+
+    const FILTER_IN_SCREEN = screen.getByTestId("filter")
+    expect(FILTER_IN_SCREEN).toBeInTheDocument()
+
+    const DELETE_FILTER_BUTTON = screen.getByRole('button', { id: 'population'})
+    userEvent.click(DELETE_FILTER_BUTTON);
+
+    expect(FILTER_IN_SCREEN).not.toBeInTheDocument()
+  });
 });
