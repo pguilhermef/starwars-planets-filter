@@ -11,14 +11,19 @@ function PlanetsProvider(props) {
   });
   const [filterByNumericValues, setfilterByNumericValues] = useState([]);
   const [filterButton, setFilterButton] = useState(false);
-  const [columnFilterAvailable, setColumnFilterAvailable] = useState([
+  const columnsAvailableInitialState = [
     'population',
     'orbital_period',
     'diameter',
     'rotation_period',
     'surface_water',
-  ]);
+  ];
+  const [
+    columnFilterAvailable,
+    setColumnFilterAvailable,
+  ] = useState(columnsAvailableInitialState);
 
+  // Chama a api e atribui seu resultado a planets e planetsToFilter
   useEffect(() => {
     const getPlanets = async () => {
       try {
@@ -32,26 +37,28 @@ function PlanetsProvider(props) {
     getPlanets();
   }, []);
 
+  // Assim que um filtro for usado ou excluido, deve ser feita a verificação dos filtros disponíveis para uso
+  // const columnsAvailables = () => {
+  //   const filterInUse = filterByNumericValues
+  //     .map(({ column }) => column);
+
+  //   const filtersAvailable = columnFilterAvailable
+  //     .filter((filter) => !filterInUse.includes(filter));
+
+  //   setColumnFilterAvailable(filtersAvailable);
+  // };
+
+  // Quando o .filter no useEffect abaixo for ativado, retorna planetas que derem True
   const handleComparisonFilter = (planet, column, comparison, value) => {
     switch (comparison) {
     case 'maior que':
-      return Number(planet[column]) > Number(value) && planet[column] !== 'unknown';
+      return Number(planet[column]) > Number(value);
     case 'menor que':
       return Number(planet[column]) < Number(value);
     case 'igual a':
-      return Number(planet[column]) === Number(value) && planet[column] !== 'unknown';
+      return Number(planet[column]) === Number(value);
     default: return planet;
     }
-  };
-
-  const columnsAvailables = () => {
-    const filterInUse = filterByNumericValues
-      .map(({ column }) => column);
-
-    const filtersAvailable = columnFilterAvailable
-      .filter((filter) => !filterInUse.includes(filter));
-
-    setColumnFilterAvailable(filtersAvailable);
   };
 
   useEffect(() => {
@@ -66,7 +73,10 @@ function PlanetsProvider(props) {
         filterPlanets = filteredPlanetList;
       });
     }
-    columnsAvailables();
+    // columnsAvailables();
+    // Problema da mentoria está aqui!
+    // Ao excluir o filtro, ele nao apaga
+    console.log('fui atualizado');
     setPlanetsToFilter(filterPlanets);
   }, [filterButton]); // eslint-disable-line
 
@@ -87,6 +97,7 @@ function PlanetsProvider(props) {
     setFilterButton,
     columnFilterAvailable,
     setColumnFilterAvailable,
+    columnsAvailableInitialState,
   };
 
   return (

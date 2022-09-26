@@ -10,10 +10,12 @@ function NumberFilter() {
     columnFilterAvailable,
     setColumnFilterAvailable,
   } = useContext(PlanetsContext);
+  // Comente todas as funções abaixo para resolver o bug que está atormentando nossas vidas
 
+  // Column está sendo pego pelo índice para a resolução do bug de adicionar duas tarefas com o mesmo filtro! Não mude!
   // Aqui é o estado DESSE arquivo
   const [numericFilterMetrics, setNumericFiltersMetrics] = useState({
-    column: 'population',
+    column: columnFilterAvailable[0],
     comparison: 'maior que',
     value: 0,
   });
@@ -26,9 +28,6 @@ function NumberFilter() {
     }));
   };
 
-  const updateColumnOptions = () => setColumnFilterAvailable(columnFilterAvailable
-    .filter((column) => column !== numericFilterMetrics.column));
-
   // Aqui pega o estado desse arquivo e o envia para O GLOBAL
   const applyFilters = () => {
     const newFilter = numericFilterMetrics;
@@ -39,21 +38,20 @@ function NumberFilter() {
     setFilterButton(!filterButton);
   };
 
+  const updateColumnOptions = () => setColumnFilterAvailable(columnFilterAvailable
+    .filter((column) => column !== numericFilterMetrics.column));
+
   const deleteAllFilters = () => {
     setfilterByNumericValues([]);
     setFilterButton(!filterButton);
   };
 
-  const deleteFilter = ({ target }) => {
-    const comparison = target.id;
-
-    const filterToDelete = filterByNumericValues
-      .find(({ column }) => column === comparison);
-
-    const deletedFilter = filterByNumericValues
-      .filter((filtro) => filtro !== filterToDelete);
-
-    setfilterByNumericValues(deletedFilter);
+  const deleteFilter = (column) => {
+    // Isso adiciona a coluna que antes estava sendo usada como uma das opções de filtros disponiveis
+    setColumnFilterAvailable((prevState) => [...prevState, column]);
+    // E isso refaz os filtros com todos os filtros anteriores, retirando apenas o que foi clicado
+    setfilterByNumericValues(filterByNumericValues
+      .filter((filter) => filter.column !== column));
     setFilterButton(!filterButton);
   };
 
@@ -132,7 +130,7 @@ function NumberFilter() {
                 <button
                   id={ column }
                   type="button"
-                  onClick={ deleteFilter }
+                  onClick={ () => deleteFilter(column) }
                 >
                   X
                 </button>
