@@ -16,38 +16,39 @@ function Table() {
     'Population',
     'Films',
     'Created',
-    'Edited',
     'URL',
   ];
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {tableTitles.map((titles) => (<th key={ titles }>{ titles }</th>))}
-        </tr>
-      </thead>
-      <tbody>
-        {planets && filteredPlanets
-          .map((info) => (
-            <tr key={ info.name }>
-              <td>{info.name}</td>
-              <td>{info.rotation_period}</td>
-              <td>{info.orbital_period}</td>
-              <td>{info.diameter}</td>
-              <td>{info.climate}</td>
-              <td>{info.gravity}</td>
-              <td>{info.terrain}</td>
-              <td>{info.surface_water}</td>
-              <td>{info.population}</td>
-              <td>{info.films.length}</td>
-              <td>{info.created}</td>
-              <td>{info.edited}</td>
-              <td>{info.url}</td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
+    <div className='xl:px-5 xl:py-0.5 my-5 bg-white rounded'>
+      <table className='border-collapse rounded-lg border border-slate-400 my-5 text-center'>
+        <thead>
+          <tr>
+            {tableTitles.map((titles) => (<th className='border border-slate-300 bg-white' key={ titles }>{ titles }</th>))}
+          </tr>
+        </thead>
+        <tbody>
+          {planets && filteredPlanets
+            .map((info) => (
+              <tr key={ info.name } className='odd:bg-white even:bg-slate-50'>
+                <td className='border border-slate-300'>{info.name}</td>
+                <td className='border border-slate-300'>{info.rotation_period}</td>
+                <td className='border border-slate-300'>{info.orbital_period}</td>
+                <td className='border border-slate-300'>{info.diameter}</td>
+                <td className='border border-slate-300'>{info.climate}</td>
+                <td className='border border-slate-300'>{info.gravity}</td>
+                <td className='border border-slate-300'>{info.terrain}</td>
+                <td className='border border-slate-300'>{info.surface_water}</td>
+                <td className='border border-slate-300'>{info.population}</td>
+                <td className='border border-slate-300'>{info.films.length}</td>
+                <td className='border border-slate-300'>{info.created}</td>
+                <td className='border border-slate-300'>{info.url}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+    
   );
 }
 
