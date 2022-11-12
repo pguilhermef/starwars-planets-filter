@@ -68,11 +68,13 @@ function NumberFilter() {
 
   return (
     <>
+    <div className='flex' >
       <select
         id="column"
         data-testid="column-filter"
         value={ filterByNumericValues.column }
         onChange={ handleNumericFilterMetrics }
+        className="rounded bg-gray-300 py-2 text-center ml-2 mt-2"
       >
         {columnFilterAvailable.map((column) => (
           <option key={ column }>{ column }</option>
@@ -84,10 +86,11 @@ function NumberFilter() {
         data-testid="comparison-filter"
         value={ filterByNumericValues.comparison }
         onChange={ handleNumericFilterMetrics }
+        className="rounded bg-gray-300 py-2 text-center ml-2 mt-2"
       >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
+        <option className="rounded bg-gray-300">maior que</option>
+        <option className="rounded bg-gray-300">menor que</option>
+        <option className="rounded bg-gray-300">igual a</option>
       </select>
 
       <label htmlFor="value-filter">
@@ -97,24 +100,30 @@ function NumberFilter() {
           data-testid="value-filter"
           value={ numericFilterMetrics.value }
           onChange={ handleNumericFilterMetrics }
+          className="rounded bg-gray-300 py-1.5 text-center ml-2 mt-2"
         />
       </label>
 
+    </div>
+    
+    <div>
       <button
         type="button"
         data-testid="button-filter"
         onClick={ handleFilter }
+        className="ml-2 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm text-gray-700 shadow-sm hover:bg-yellow-300  hover:text-black"
       >
         Filtrar
       </button>
-
       <button
         type="button"
         onClick={ deleteAllFilters }
         data-testid="button-remove-filters"
+        className="ml-2 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm text-gray-700 shadow-sm hover:bg-red-500  hover:text-white"
       >
         Remover Filtros
       </button>
+    </div>
 
       { filterByNumericValues.length > 0 && (
         <div>
@@ -131,6 +140,7 @@ function NumberFilter() {
                   id={ column }
                   type="button"
                   onClick={ () => deleteFilter(column) }
+                  className="ml-5 rounded-md border border-gray-300 py-2 px-3 bg-red-600 hover:bg-red-800"
                 >
                   X
                 </button>
