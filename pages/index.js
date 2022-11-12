@@ -10,11 +10,17 @@ export default function Home() {
   return (
     <PlanetsProvider>
       <div className={styles.container}>
-        <body>
-          <Image src={starWars} alt='star wars logo' className='md:mb-6'/>
-          <NameFilter />
-          <NumberFilter />
-          <Table />
+        <body className='flex flex-col justify-center items-center'>
+          <div>
+            <Image src={starWars} alt='star wars logo' className='mt-10 mb-1'/>
+          </div>
+          <div className='bg-white p-2 w-full rounded flex justify-evenly items-center' >
+            <NameFilter />
+            <NumberFilter />
+          </div>
+          <div>
+            <Table />
+          </div>
         </body>
       </div>
     </PlanetsProvider>
