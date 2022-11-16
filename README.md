@@ -18,3 +18,4 @@ Eu usei uma API de planetas de starwars para criar essa aplicação. Você pode 
 * Ao clicar em excluir todos os filtros, deve retornar as opções de filtros novamente.
 * Criar a parte responsiva da aplicação;
 * Alterar o nome das opções de filtros de forma que não fique com underlines
+* Refatorar o estado derivado.
