@@ -1,6 +1,6 @@
 # Boas-vindas ao repositório do meu projeto de filtro de planetas do Star Wars!
 
-### Neste projeto eu criei o Star Wars Planets Search, uma aplicação capaz de filtrar planetas dos mais variados tamanhos e características. O usuário é capaz de filtrar planetas por nome, dimensão, população, quantidade de água na superfície, clima e até mesmo o seu tempo de volta orbital. (E isso só pra citar alguns hein!)
+#### Neste projeto eu criei o Star Wars Planets Search, uma aplicação capaz de filtrar planetas dos mais variados tamanhos e características. O usuário é capaz de filtrar planetas por nome, dimensão, população, quantidade de água na superfície, clima e até mesmo o seu tempo de volta orbital. (E isso só pra citar alguns hein!)
 
 ### Esse projeto me desafiou a usar os seguintes conhecimentos:
 
@@ -19,3 +19,4 @@ Eu usei uma API de planetas de starwars para criar essa aplicação. Você pode 
 * Criar a parte responsiva da aplicação;
 * Alterar o nome das opções de filtros de forma que não fique com underlines
 * Refatorar o estado derivado.
+* Refatorar a aplicação usando Next.js
