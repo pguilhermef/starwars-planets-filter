@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #594848;
+}
+
+body {
+  background-image: url('../public/space.jpg');
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: cover;
+}
