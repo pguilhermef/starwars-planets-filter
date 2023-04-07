@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #594848;
+}
+
+body {
+  background-image: url('../public/space.jpg');
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: cover;
+}
+
+.glassmorphism {
+  background: rgba(49, 49, 49, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.glassmorphism-black {
+  background: rgba(20, 20, 20, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
