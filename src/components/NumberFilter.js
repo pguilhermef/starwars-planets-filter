@@ -69,9 +69,12 @@ function NumberFilter() {
   return (
     <div className="flex justify-center">
       <div
-        className="max-w-3xl flex justify-evenly items-center flex-wrap w-[60vw] md:w-3/4 xl:w-2/4"
+        className="max-w-3xl flex justify-evenly items-center flex-wrap md:w-3/4 xl:w-2/4"
       >
-        <div className="text-white text-2xl font-semibold">
+        <div
+          className="text-white
+          text-3xl font-semibold shadow-lg glassmorphism-black p-2"
+        >
           Filtre por atributos:
         </div>
 
@@ -117,7 +120,7 @@ function NumberFilter() {
             type="button"
             data-testid="button-filter"
             onClick={ handleFilter }
-            className="bg-yellow-300 h-10 w-full my-1 mr-5 rounded-lg"
+            className="bg-starwars-yellow h-10 w-full my-1 mr-5 rounded-lg xl:my-0"
           >
             Filtrar
           </button>
@@ -126,7 +129,7 @@ function NumberFilter() {
             type="button"
             onClick={ deleteAllFilters }
             data-testid="button-remove-filters"
-            className="bg-red-500 h-10 w-full my-1 rounded-lg xl:my-0"
+            className="bg-starwars-red h-10 w-full my-1 rounded-lg xl:my-0"
           >
             Remover Filtros
           </button>
